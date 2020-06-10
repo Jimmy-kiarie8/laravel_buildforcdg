@@ -41,41 +41,55 @@
                                 </v-flex>
                                 <v-flex sm6>
                                     <label for="">Book per student</label>
-                                    <el-input placeholder="Book per student" v-model="form.books_per_student"></el-input>
+                                    <el-input placeholder="Book per student" v-model="form.book_per_student"></el-input>
                                 </v-flex>
                                 <v-flex sm6>
                                     <label for="">No of teachers</label>
                                     <el-input placeholder="No of teachers" v-model="form.no_of_teachers"></el-input>
                                 </v-flex>
-                                <v-flex sm6>
+                                <!-- <v-flex sm6>
                                     <label for="">Non curriculum activities</label>
                                     <el-input placeholder="Non curriculum activities" v-model="form.non_curriculum_activities"></el-input>
                                 </v-flex>
                                 <v-flex sm6>
                                     <label for="">Subjects</label>
                                     <el-input placeholder="Subjects" v-model="form.subjects"></el-input>
-                                </v-flex>
+                                </v-flex> -->
                                 <v-flex sm6>
                                     <label for="">Average school performance</label>
-                                    <el-input placeholder="Average school performance" v-model="form.average_school_performance"></el-input>
+                                    <el-input placeholder="Average school performance" v-model="form.average_performance"></el-input>
                                 </v-flex>
                                 <v-flex sm6>
                                     <label for="">No of dropouts</label>
                                     <el-input placeholder="No of dropouts" v-model="form.no_of_dropouts"></el-input>
                                 </v-flex>
                                 <v-flex sm6>
-                                    <label for="">School Level</label>
-                                    <el-select v-model="form.setId" filterable clearable placeholder="Ward" style="width: 100%;">
-                                        <el-option v-for="item in schools" :key="item.id" :label="item.schoolName" :value="item.id">
+                                    <label for="">No of Disabled</label>
+                                    <el-input placeholder="No of Disabled" v-model="form.no_of_disabled_students"></el-input>
+                                </v-flex>
+                                <v-flex sm6>
+                                    <label for="">School</label>
+                                    <el-select v-model="form.school" filterable clearable placeholder="School" style="width: 100%;">
+                                        <el-option v-for="item in schools" :key="item.id" :label="item.name" :value="item.id">
                                         </el-option>
                                     </el-select>
                                 </v-flex>
                                 <v-flex sm6>
-                                    <label for="">Score</label>
-                                    <el-select v-model="form.scoreId" filterable clearable placeholder="Ward" style="width: 100%;">
-                                        <el-option v-for="item in schools" :key="item.id" :label="item.setName" :value="item.id">
+                                    <label for="">Course</label>
+                                    <el-select v-model="form.course" filterable clearable placeholder="School" style="width: 100%;">
+                                        <el-option v-for="item in courses" :key="item.id" :label="item.name" :value="item.id">
                                         </el-option>
                                     </el-select>
+                                </v-flex>
+                                <v-flex sm6>
+                                    <label for="">Year</label>
+                                    <el-date-picker v-model="form.year" type="year" placeholder="Pick a year" style="width: 100%">
+                                    </el-date-picker>
+                                </v-flex>
+                                <v-flex sm12>
+                                    <label for="">Description</label>
+                                    <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="form.description">
+                                    </el-input>
                                 </v-flex>
                             </v-layout>
                         </v-flex>
@@ -103,7 +117,7 @@ export default {
         errors: {},
     }),
     created() {
-        eventBus.$on("openCreateScoresheet", data => {
+        eventBus.$on("openCreateStatistics", data => {
             this.dialog = true;
         });
     },
@@ -112,12 +126,12 @@ export default {
         save() {
 
             var payload = {
-                model: 'scoresheets',
+                model: 'statistics',
                 data: this.form
             }
             this.$store.dispatch('postItems', payload)
                 .then(response => {
-                    eventBus.$emit("scoresheetEvent")
+                    eventBus.$emit("StatisticsEvent")
                 });
         },
         close() {
@@ -125,7 +139,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['loading', 'score_sets', 'schools'])
+        ...mapState(['loading', 'score_sets', 'schools', 'courses'])
     },
 };
 </script>

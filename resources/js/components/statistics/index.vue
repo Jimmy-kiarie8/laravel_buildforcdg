@@ -6,7 +6,7 @@
                 <v-card style="padding: 20px 0;">
                     <el-breadcrumb separator-class="el-icon-arrow-right">
                         <el-breadcrumb-item :to="{ path: '/' }">Dashboard</el-breadcrumb-item>
-                        <el-breadcrumb-item>Scoresheets</el-breadcrumb-item>
+                        <el-breadcrumb-item>Statistics</el-breadcrumb-item>
                     </el-breadcrumb>
                 </v-card>
             </v-flex>
@@ -19,7 +19,7 @@
                         <v-flex sm1 style="margin-left: 10px;">
                             <v-tooltip right>
                                 <template v-slot:activator="{ on }">
-                                    <v-btn icon v-on="on" slot="activator" class="mx-0" @click="getScoresheets">
+                                    <v-btn icon v-on="on" slot="activator" class="mx-0" @click="getStatistics">
                                         <v-icon color="blue darken-2" small>refresh</v-icon>
                                     </v-btn>
                                 </template>
@@ -27,19 +27,19 @@
                             </v-tooltip>
                         </v-flex>
                         <v-flex sm3>
-                            <h3 style="margin-left: 30px !important;margin-top: 10px;">Scoresheets</h3>
+                            <h3 style="margin-left: 30px !important;margin-top: 10px;">Statistics</h3>
                         </v-flex>
                         <v-flex offset-sm8 sm3>
-                            <v-btn color="info" @click="openCreate" text>Create Scoresheet</v-btn>
+                            <v-btn color="info" @click="openCreate" text>Create Statistics</v-btn>
                         </v-flex>
                     </v-layout>
                 </v-card>
             </v-flex>
             <!-- <v-flex sm12>
-                <v-pagination v-model="scoresheets.current_page" :length="scoresheets.last_page" total-visible="5" @input="next_page(scoresheets.path, scoresheets.current_page)" circle v-if="scoresheets.last_page > 1"></v-pagination>
+                <v-pagination v-model="statistics.current_page" :length="statistics.last_page" total-visible="5" @input="next_page(statistics.path, statistics.current_page)" circle v-if="statistics.last_page > 1"></v-pagination>
             </v-flex> -->
             <v-flex sm12>
-                <vue-good-table class="table-hover" :columns="columns" :rows="scoresheets" :search-options="{ enabled: true }" :pagination-options="{enabled: true,mode: 'pages'}" v-loading="loading" :sort-options="{enabled: true, initialSortBy: {field: 'id', type: 'asc'}}">
+                <vue-good-table class="table-hover" :columns="columns" :rows="statistics" :search-options="{ enabled: true }" :pagination-options="{enabled: true,mode: 'pages'}" v-loading="loading" :sort-options="{enabled: true, initialSortBy: {field: 'id', type: 'asc'}}">
                     <template slot="table-row" slot-scope="props">
                         <span v-if="props.column.field == 'created_at'">
                             <span>
@@ -133,21 +133,21 @@ export default {
 
                 {
                     label: "Books per student",
-                    field: "books_per_student"
+                    field: "book_per_student"
                 },
 
                 {
                     label: "No of teachers",
                     field: "no_of_teachers"
                 },
-                {
-                    label: "Non urriculum activities",
-                    field: "non_curriculum_activities"
-                },
-                {
-                    label: "Subjects",
-                    field: "subjects"
-                },
+                // {
+                //     label: "Non urriculum activities",
+                //     field: "non_curriculum_activities"
+                // },
+                // {
+                //     label: "Subjects",
+                //     field: "subjects"
+                // },
                 {
                     label: "Average school performance",
                     field: "average_school_performance"
@@ -157,8 +157,8 @@ export default {
                     field: "no_of_dropouts"
                 },
                 {
-                    label: "set Id",
-                    field: "setId"
+                    label: "Description",
+                    field: "description"
                 },
                 {
                     label: "score Id",
@@ -169,15 +169,11 @@ export default {
     },
     methods: {
         openCreate() {
-            eventBus.$emit("openCreateScoresheet");
-            var payload = {
-                model: 'groups',
-                update: 'updateGroupList',
-            }
-            this.$store.dispatch("getItems", payload);
+            eventBus.$emit("openCreateStatistics");
+
         },
         openEdit(data) {
-            eventBus.$emit("openEditScoresheet", data);
+            eventBus.$emit("openEditStatistics", data);
         },
 
         confirm_delete(item) {
@@ -196,53 +192,69 @@ export default {
         },
 
         deleteItem(item) {
-            this.$store.dispatch("deleteItem", "scoresheets/" + item.id).then(response => {
+            this.$store.dispatch("deleteItem", "statistics/" + item.id).then(response => {
                 this.$message({
                     type: 'success',
                     message: 'Delete completed'
                 });
-                this.getScoresheets();
+                this.getStatistics();
             });
         },
         openShow(data) {
-            eventBus.$emit("openShowScoresheet", data);
+            eventBus.$emit("openShowStatistics", data);
         },
-        getScoresheets() {
+        getStatistics() {
             var payload = {
-                model: 'scoresheets',
-                update: 'updateScoresheetList'
+                model: 'statistics',
+                update: 'updateStatistics'
+            }
+            this.$store.dispatch("getItems", payload);
+        },
+        getSchools() {
+            var payload = {
+                model: 'schools',
+                update: 'updateSchool'
             }
             this.$store.dispatch("getItems", payload);
         },
 
+        getCourses() {
+            var payload = {
+                model: 'courses',
+                update: 'updateCourse'
+            }
+            this.$store.dispatch("getItems", payload);
+        },
         next_page(path, page) {
             var payload = {
                 path: path,
                 page: page,
-                update: 'updateScoresheetsList'
+                update: 'updateStatistics'
             }
             this.$store.dispatch("nextPage", payload);
         },
     },
     computed: {
-        ...mapState(['scoresheets', 'loading']),
+        ...mapState(['statistics', 'loading']),
     },
     mounted() {
-        // this.$store.dispatch('getScoresheets');
+        // this.$store.dispatch('getStatistics');
         eventBus.$emit("LoadingEvent");
-        this.getScoresheets();
+        this.getStatistics();
+        this.getSchools();
+        this.getCourses();
     },
     created() {
-        eventBus.$on("scoresheetEvent", data => {
-            this.getScoresheets();
+        eventBus.$on("StatisticsEvent", data => {
+            this.getStatistics();
         });
 
         eventBus.$on("responseChooseEvent", data => {
             console.log(data);
             if (data == "Excel") {
-                eventBus.$emit("openEditScoresheet");
+                eventBus.$emit("openEditStatistics");
             } else {
-                eventBus.$emit("openCreateScoresheet");
+                eventBus.$emit("openCreateStatistics");
             }
         });
     },

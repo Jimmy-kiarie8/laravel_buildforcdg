@@ -104,7 +104,7 @@ export default {
                 },
                 {
                     label: "Country",
-                    field: "country"
+                    field: "country_name"
                 },
                 {
                     label: "Created On",

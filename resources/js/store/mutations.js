@@ -33,21 +33,25 @@ export default {
         state.statistics = payload
     },
 
+    updateCourse(state, payload) {
+        state.courses = payload
+    },
+
     updateSchoolCount(state, payload) {
         state.total_schools = payload
     },
-updateCountyCount(state, payload) {
-    state.county_count = payload
-},
-updateConstituencyCount(state, payload) {
-    state.constituency_count = payload
-},
-updateCountryCount(state, payload) {
-    state.country_count = payload
-},
-updateCountryCount(state, payload) {
-    state.country_count = payload
-},
+    updateCountyCount(state, payload) {
+        state.county_count = payload
+    },
+    updateConstituencyCount(state, payload) {
+        state.constituency_count = payload
+    },
+    updateCountryCount(state, payload) {
+        state.country_count = payload
+    },
+    updateCountryCount(state, payload) {
+        state.country_count = payload
+    },
 
 }
 

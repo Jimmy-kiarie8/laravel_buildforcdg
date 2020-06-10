@@ -103,8 +103,8 @@ export default {
                     field: "name"
                 },
                 {
-                    label: "Country",
-                    field: "country_id"
+                    label: "County",
+                    field: "county_name"
                 },
                 {
                     label: "Created On",
@@ -124,11 +124,7 @@ export default {
     methods: {
         openCreate() {
             eventBus.$emit("openCreateConstituency");
-            var payload = {
-                model: 'groups',
-                update: 'updateGroupList',
-            }
-            this.$store.dispatch("getItems", payload);
+
         },
         openEdit(data) {
             eventBus.$emit("openEditConstituency", data);
@@ -164,11 +160,18 @@ export default {
         getConstituencies() {
             var payload = {
                 model: 'constituencies',
-                update: 'updateConstituencyList'
+                update: 'updateConstituencies'
             }
             this.$store.dispatch("getItems", payload);
         },
 
+        getCounty() {
+            var payload = {
+                model: 'counties',
+                update: 'updateCounty'
+            }
+            this.$store.dispatch("getItems", payload);
+        },
         next_page(path, page) {
             var payload = {
                 path: path,
@@ -185,6 +188,7 @@ export default {
         // this.$store.dispatch('getConstituencies');
         eventBus.$emit("LoadingEvent");
         this.getConstituencies();
+        this.getCounty();
     },
     created() {
         eventBus.$on("constituencyEvent", data => {

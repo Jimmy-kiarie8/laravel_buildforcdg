@@ -39,7 +39,7 @@
                 <v-pagination v-model="schools.current_page" :length="schools.last_page" total-visible="5" @input="next_page(schools.path, schools.current_page)" circle v-if="schools.last_page > 1"></v-pagination>
             </v-flex> -->
             <v-flex sm12>
-                <vue-good-table class="table-hover" :columns="columns" :rows="school" :search-options="{ enabled: true }" :pagination-options="{enabled: true,mode: 'pages'}" v-loading="loading" :sort-options="{enabled: true, initialSortBy: {field: 'id', type: 'asc'}}">
+                <vue-good-table class="table-hover" :columns="columns" :rows="schools" :search-options="{ enabled: true }" :pagination-options="{enabled: true,mode: 'pages'}" v-loading="loading" >
                     <template slot="table-row" slot-scope="props">
                         <span v-if="props.column.field == 'created_at'">
                             <span>
@@ -103,12 +103,20 @@ export default {
                     field: "name"
                 },
                 {
-                    label: "School code",
-                    field: "code"
+                    label: "School type",
+                    field: "type"
                 },
                 {
-                    label: "School Flag",
-                    field: "flag"
+                    label: "Non curriculum activities",
+                    field: "non_curriculum_activities"
+                },
+                {
+                    label: "Level",
+                    field: "level"
+                },
+                {
+                    label: "Ward",
+                    field: "ward_id"
                 },
                 {
                     label: "Created On",
@@ -128,11 +136,7 @@ export default {
     methods: {
         openCreate() {
             eventBus.$emit("openCreateSchool");
-            var payload = {
-                model: 'groups',
-                update: 'updateGroupList',
-            }
-            this.$store.dispatch("getItems", payload);
+
         },
         openEdit(data) {
             eventBus.$emit("openEditSchool", data);
@@ -168,7 +172,7 @@ export default {
         getSchools() {
             var payload = {
                 model: 'schools',
-                update: 'updateSchoolList'
+                update: 'updateSchool'
             }
             this.$store.dispatch("getItems", payload);
         },
@@ -183,7 +187,7 @@ export default {
         },
     },
     computed: {
-        ...mapState(['school', 'loading']),
+        ...mapState(['schools', 'loading']),
     },
     mounted() {
         // this.$store.dispatch('getSchools');

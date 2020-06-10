@@ -11,11 +11,15 @@
                     <v-layout row wrap>
                         <v-flex sm12>
                             <div>
+                                <label for="">Name</label>
+                                <el-input placeholder="Name" v-model="form.name"></el-input>
+                            </div>
+                            <div>
                                 <label for="">Code</label>
                                 <el-input placeholder="Code" v-model="form.code"></el-input>
                             </div>
                             <label for="">Country</label>
-                            <el-select v-model="form.Country" filterable clearable placeholder="Country" style="width: 100%;">
+                            <el-select v-model="form.country_id" filterable clearable placeholder="Country" style="width: 100%;">
                                 <el-option v-for="item in country" :key="item.id" :label="item.name" :value="item.id">
                                 </el-option>
                             </el-select>
@@ -53,7 +57,7 @@ export default {
         save() {
 
             var payload = {
-                model: 'countries',
+                model: 'counties',
                 data: this.form
             }
             this.$store.dispatch('postItems', payload)

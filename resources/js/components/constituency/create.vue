@@ -14,9 +14,9 @@
                                         <label for="">Constituency Name</label>
                                         <el-input placeholder="Name" v-model="form.name"></el-input>
                                     </div>
-                                    <label for="">Country</label>
-                                    <el-select v-model="form.country_id" filterable clearable placeholder="Country" style="width: 100%;">
-                                        <el-option v-for="item in country" :key="item.id" :label="item.name" :value="item.id">
+                                    <label for="">County</label>
+                                    <el-select v-model="form.county_id" filterable clearable placeholder="County" style="width: 100%;">
+                                        <el-option v-for="item in county" :key="item.id" :label="item.name" :value="item.id">
                                         </el-option>
                                     </el-select>
                             </v-flex>
@@ -66,7 +66,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['country', 'loading'])
+        ...mapState(['county', 'loading'])
     },
 };
 </script>

@@ -124,11 +124,7 @@ export default {
     methods: {
         openCreate() {
             eventBus.$emit("openCreateScoresheet");
-            var payload = {
-                model: 'groups',
-                update: 'updateGroupList',
-            }
-            this.$store.dispatch("getItems", payload);
+
         },
         openEdit(data) {
             eventBus.$emit("openEditScoresheet", data);

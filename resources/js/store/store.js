@@ -16,6 +16,7 @@ export default {
         ward: [],
         statistics: [],
         school_level: [],
+        courses: [],
 
         total_schools: null,
         county_count: null,

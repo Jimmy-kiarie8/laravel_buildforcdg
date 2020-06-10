@@ -128,11 +128,7 @@ export default {
     methods: {
         openCreate() {
             eventBus.$emit("openCreateCountry");
-            var payload = {
-                model: 'groups',
-                update: 'updateGroupList',
-            }
-            this.$store.dispatch("getItems", payload);
+
         },
         openEdit(data) {
             eventBus.$emit("openEditCountry", data);

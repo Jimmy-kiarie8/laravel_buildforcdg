@@ -124,11 +124,7 @@ export default {
     methods: {
         openCreate() {
             eventBus.$emit("openCreateWard");
-            var payload = {
-                model: 'groups',
-                update: 'updateGroupList',
-            }
-            this.$store.dispatch("getItems", payload);
+
         },
         openEdit(data) {
             eventBus.$emit("openEditWard", data);

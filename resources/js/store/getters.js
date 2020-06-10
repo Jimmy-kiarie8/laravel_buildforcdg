@@ -15,6 +15,9 @@ export default {
     constituencies(state) {
         return state.constituencies
     },
+    courses(state) {
+        return state.courses
+    },
     country(state) {
         return state.country
     },

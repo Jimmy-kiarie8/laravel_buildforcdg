@@ -21,5 +21,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('constituencies', 'ConstituecyController');
+Route::resource('schools', 'SchoolController');
+Route::resource('counties', 'CountyController');
+Route::resource('countries', 'CountryController');
 Route::resource('user', 'UserController');
+Route::resource('courses', 'CourseController');
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('statistics', 'StatisticController');
